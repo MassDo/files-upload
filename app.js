@@ -6,16 +6,18 @@ const app = express();
 const connectDB = require('./db/connect');
 // import router
 const productRouter = require('./routes/productRoutes')
-// import error handler
+// import middlewares
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+// middleware to read json in request body
+app.use(express.json())
+// routes
 app.get('/', (req, res) => {
   res.send('<h1>File Upload Starter</h1>');
 });
 app.use('/api/v1/products', productRouter)
-
-// middleware
+// middleware errors
 app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
