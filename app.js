@@ -7,11 +7,14 @@ const connectDB = require('./db/connect');
 // import router
 const productRouter = require('./routes/productRoutes')
 // import middlewares
+const fileUpload = require('express-fileupload')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
-// middleware to read json in request body
+// middleware to read raw json in request body and file upload
 app.use(express.json())
+app.use(fileUpload())
+app.use(express.static('public'))
 // routes
 app.get('/', (req, res) => {
   res.send('<h1>File Upload Starter</h1>');
