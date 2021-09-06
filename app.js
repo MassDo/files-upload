@@ -7,13 +7,19 @@ const connectDB = require('./db/connect');
 // import router
 const productRouter = require('./routes/productRoutes')
 // import middlewares
+const cloudinary = require('cloudinary').v2
+cloudinary.config({
+  cloud_name:process.env.CLOUD_NAME,
+  api_key:process.env.API_KEY,
+  api_secret:process.env.API_SECRET
+})
 const fileUpload = require('express-fileupload')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 // middleware to read raw json in request body and file upload
 app.use(express.json())
-app.use(fileUpload())
+app.use(fileUpload({useTempFiles:true}))
 app.use(express.static('public'))
 // routes
 app.get('/', (req, res) => {
